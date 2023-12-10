@@ -1,39 +1,32 @@
 package sudoku.table;
 
-public class GenerateTable {
-    private int[][] a;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class GenerateTable {
+    protected int[][] a;
+    protected static boolean finished;
+    protected static final int dimension = 9;
+    protected static final int numberOfCells = dimension * dimension;
+    protected static final int maxCandidates = dimension + 1;
+    protected int input;
     public GenerateTable() {
         a = new int[9][9];
-        for (int i = 0; i < 9; i++) { //genereaza un rand aleator si afla solutia => asa faci un puzzle sudoku
-            int num = getNubmber();
-            while (!checkLine(0, num) || !checkColumn(i, num))
-                num = getNubmber();
-            a[0][i] = num;
-        }
-    }
-
-    private boolean checkColumn(int column, int num) {
+        ArrayList<Integer> line = new ArrayList<>();
+        for (int i = 1; i < 10; i++)
+            line.add(i);
+        Collections.shuffle(line);
+        int r = (int) (Math.random() * 10) % 10;
         for (int i = 0; i < 9; i++)
-            if (a[i][column] == num)
-                return false;
-        return true;
-    }
+            a[r][i] = line.get(i);
 
-    private boolean checkLine(int line, int num) {
-        for (int i = 0; i < 9; i++)
-            if (a[line][i] == num)
-                return false;
-        return true;
-    }
-
-    private int getNubmber() {
-        return (int) (Math.random() * 10) % 9 + 1;
     }
 
     public void showTable() {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++)
+        int n = 9;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++)
                 System.out.print(a[i][j] + " ");
             System.out.println();
         }
